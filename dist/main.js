@@ -1,0 +1,1 @@
+({138:function(){let e=((e,s,t=1,i=null,n=!1,o=null)=>{const c={check:()=>this.isDone=!1===this.isDone,change:(e,s)=>this[e]=s},l={title:"dishes",dueDate:"1sep",priority:t,details:i,isDone:n,project:o},h=Object.create(c);return Object.assign(h,l)})();console.log(e.check),console.log(e.isDone)}})[138]();
