@@ -150,7 +150,7 @@ const DOMHelpers = (function(){
         })
 
         if(task.priority){
-            taskDiv.classList.add(`${task.priority}`)
+            taskDiv.dataset.priority = task.priority;
         }
 
         taskDiv.appendChild(taskHeader);
@@ -168,9 +168,19 @@ const DOMHelpers = (function(){
 
 const DOMManipulator = (function(){
     const tasksDiv =  document.querySelector("#tasks");
+    const contentDiv = document.querySelector('div#content')
 
     const clearTaskDiv = function(){
         tasksDiv.innerHTML = ''
+    }
+
+    const setPage = function(){
+        const formDiv = document.querySelector('div.new-task');
+        const btn = document.querySelector('button.add-task');
+        btn.addEventListener('click', () => {
+            formDiv.classList.toggle('inactive');
+            contentDiv.classList.toggle('blur');
+        })
     }
 
     const displayAllTasks = function(){
@@ -183,9 +193,12 @@ const DOMManipulator = (function(){
             }
         }
     }
-    return {displayAllTasks}
+    return {displayAllTasks, setPage}
 })()
 
-window.onload = DOMManipulator.displayAllTasks();
+window.onload = () => {
+    DOMManipulator.displayAllTasks();
+    DOMManipulator.setPage();
+};
 
 task1 = taskMod.newTask('laundry', 'tomorrow', null, "no details", "no projects", false)

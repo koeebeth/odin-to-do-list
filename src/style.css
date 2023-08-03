@@ -21,7 +21,7 @@ a:active, a:visited, a:link{
 }
 
 .inactive {
-    display: none;
+    opacity: 0;
 }
 
 h1 {
@@ -67,6 +67,23 @@ div.task {
     flex-direction: column;
     background-color: rgb(216, 216, 216);
     border-radius: 15px;
+    border-left: 10px solid grey;
+}
+
+div[data-priority="1"] {
+    border-color: red;
+}
+div[data-priority="2"] {
+    border-color: rgb(255, 123, 0);
+}
+div[data-priority="3"] {
+    border-color: rgb(255, 191, 0);
+}
+div[data-priority="4"] {
+    border-color: green;
+}
+div[data-priority="5"] {
+    border-color: cornflowerblue;
 }
 
 h3 {
@@ -127,3 +144,68 @@ button.add-task:hover {
     transition: ease-out 0.2s;
 }
 
+div.new-task {
+    position: absolute;
+    opacity: 1;
+    top: 50%;
+    right: 50%;
+    transform: translateY(-50%) translateX(50%);
+    margin: auto;
+    height: 450px;
+    width: 400px;
+    padding: 2rem;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, .3);
+    transition: all 0.2s;
+}
+
+div.new-task.inactive{
+    opacity: 0;
+    transform: translateY(-30%) translateX(50%);
+}
+
+div.new-task form{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+div.new-task form div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+div.new-task input {
+    padding: 10px;
+    margin: 5px 0px;
+    border: 1px gainsboro solid;
+}
+
+input:focus {
+    outline: 2px solid grey;
+}
+
+div.new-task button {
+    height: 50px;
+    width: 90px;
+    padding: 3px;
+    align-self: center;
+    border: none;
+    border-radius: 5px;
+    font-family: Rubik, sans-serif;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: darkgray;
+}
+
+.blur {
+    filter: blur(10px);
+    transition: all 0.3s;
+}
