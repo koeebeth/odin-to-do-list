@@ -34,6 +34,7 @@ div#content {
     display: grid;
     height: 100vh;
     grid-template-columns: 1fr 3fr ;
+    gap: 2rem
 }
 
 div .navbar {
@@ -44,6 +45,16 @@ div .navbar {
     align-items: flex-start;
     font-size: 1.5rem;
     padding: 2rem;
+    box-shadow: 0px 0px 10px gainsboro;
+}
+
+.navbar{
+    font-weight: 600;
+}
+
+ul.projects {
+    margin-left: 2rem;
+    font-weight: 300;
 }
 
 div.content {
@@ -176,6 +187,7 @@ div.new-task {
 }
 
 div.new-task.inactive{
+    display: none;
     opacity: 0;
     transform: translateY(-30%) translateX(50%);
 }

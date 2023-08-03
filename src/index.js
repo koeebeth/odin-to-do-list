@@ -56,6 +56,16 @@ const storage = (function(){
         tasks = [];
     }
 
+    let projects = JSON.parse(localStorage.getItem('projectList'));
+    if(!projects){
+        projects = [
+            "Home",
+            "Work",
+            "Other",
+            "Unsorted"
+        ]   
+    }
+
     const taskList = {
         tasks: tasks,
 
@@ -71,6 +81,9 @@ const storage = (function(){
         addTask: function(task) {
             task["id"] = this.tasks.length;
             this.tasks.push(task);
+            if(!projectList.getProjectNames().includes(task.project)){
+                projectList.addProject(task.project);
+            }
             this.updateStorage();
         },
 
@@ -94,11 +107,38 @@ const storage = (function(){
             }
         }
     }
-    return {taskList}
+
+    const projectList = {
+        projects: projects,
+        
+        getProjectNames: function(){
+            return projects;
+        },
+
+        addProject: function(name){
+            projects.push(name);
+            this.updateStorage()
+        },
+
+        updateStorage: function(){
+            if(storageAvailable){
+                localStorage.setItem('projectList', JSON.stringify(this.projects));
+            }
+        }
+    }
+
+    return {taskList, projectList}
 })()
 
 
 const DOMHelpers = (function(){
+
+    const tasksDiv =  document.querySelector("#tasks");
+
+    const clearTaskDiv = function(){
+        tasksDiv.innerHTML = ''
+    }
+
     function renderTask(task){
         const taskDiv = document.createElement('div');
         taskDiv.classList.add('task');
@@ -138,8 +178,9 @@ const DOMHelpers = (function(){
         const check = document.createElement('input');
         check.classList.add('check');
         check.setAttribute('type', 'checkbox')
-        if (this.isDone) {
+        if (task.isDone) {
             check.checked = true;
+            taskDiv.classList.add('done');
         }
         check.dataset.taskId = task.id;
         check.addEventListener('input', (e) => {
@@ -172,17 +213,39 @@ const DOMHelpers = (function(){
 
         return taskDiv;
     }
-    return {renderTask};
+
+    function sortByProject(projectName) {
+        const allTasks = storage.taskList.getAllTasks();
+
+        let projectTasks = [];
+        for(const task of allTasks){
+            if(task.project == projectName){
+                projectTasks.push(task);
+            }
+            if(task.project == "" && projectName == "Unsorted"){
+                projectTasks.push(task);
+            }
+        }
+        return projectTasks;
+    }
+
+    function displayTasks(tasks) {
+        clearTaskDiv()
+        for (const task of tasks){
+            if(task){
+                const newTask = renderTask(task)
+                tasksDiv.appendChild(newTask);
+            }
+        }
+    }
+    
+    return {renderTask, clearTaskDiv, displayTasks, sortByProject};
 })()
 
 
 const DOMManipulator = (function(){
     const tasksDiv =  document.querySelector("#tasks");
     const contentDiv = document.querySelector('div#content')
-
-    const clearTaskDiv = function(){
-        tasksDiv.innerHTML = ''
-    }
 
     const setPage = function(){
         //New Task Popup
@@ -194,10 +257,9 @@ const DOMManipulator = (function(){
         })
 
         //Accept form 
-        const formSubmitBtn = formDiv.querySelector('button#add-task');
+        const form = formDiv.querySelector('form#new-task');
 
-        formSubmitBtn.addEventListener('click', (e) => {
-            e.preventDefault();
+        form.addEventListener('submit', (e) => {
             const taskObj = taskMod.newTask(
                 document.getElementById("title").value,
                 document.getElementById("date").value,
@@ -207,19 +269,34 @@ const DOMManipulator = (function(){
                 false
             )
             storage.taskList.addTask(taskObj);
-            location.reload();
+
         })
+
+        //Display projects 
+        const projectsList = document.querySelector('ul.projects');
+        const projectNames = storage.projectList.getProjectNames();
+        for(const name of projectNames){
+            const li = document.createElement('li');
+            const link = document.createElement('a');
+            link.dataset.projectName = name;
+            link.textContent = name;
+            link.addEventListener('click', (e) => {
+                const projectName = e.currentTarget.dataset.projectName;
+                const tasks = DOMHelpers.sortByProject(projectName);
+                
+                DOMHelpers.displayTasks(tasks);
+            })
+            li.appendChild(link);
+            projectsList.appendChild(li);
+        }
+
+        //Display all tasks
+        const allTasks = document.querySelector('a.all-tasks');
+        allTasks.addEventListener('click', () => displayAllTasks());
     }
 
     const displayAllTasks = function(){
-        clearTaskDiv();
-        const tasks = storage.taskList.getAllTasks();
-        for (const task of tasks){
-            if(task){
-                const newTask = DOMHelpers.renderTask(task)
-                tasksDiv.appendChild(newTask);
-            }
-        }
+        DOMHelpers.displayTasks(storage.taskList.getAllTasks());
     }
     return {displayAllTasks, setPage}
 })()
