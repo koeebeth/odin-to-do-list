@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../src/style.css">
 </head>
 <body>
-    <div id="content">
+    <div id="content" class="blur">
         <nav class="navbar">
             <header>
                 <h1>TO DO</h1>
@@ -36,10 +36,22 @@
                     <h3 class="duedate">Due to: <span>12.12.2023</span></h3>
                     <input type="checkbox" class="check">
                 </div>
-            <button type="button" class="add-task">+</button>
+            </div>
         </div>
     </div>
-    <footer>
-    </footer>
+    <div class="new-task">
+        <form>
+            <h3>New Task</h3>
+            <div>
+                <input type="text" name="title" placeholder="Title">
+                <input type="text" name="details" placeholder="Details">
+                <input type="text" name="project" placeholder="Project">
+                <input type="date" name="date" placeholder="Due Date">
+                <input type="number" min="1" max="5" placeholder="Priority">
+            </div>
+            <button type="submit">Add Task</button>
+        </form>
+    </div>
+    <button type="button" class="add-task">+</button>
 </body>
 </html>
