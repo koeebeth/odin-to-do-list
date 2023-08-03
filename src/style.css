@@ -109,9 +109,8 @@ h4 {
 .duedate{
     font-size: 1rem;
     font-weight: 500;
-    position: relative;
-    left: 63%;
-    top: 15%;
+    color: slategrey;
+    display: inline;
 }
 
 input[type="checkbox"]{
@@ -122,6 +121,13 @@ input[type="checkbox"]{
     position: absolute;
     top: 15px;
     right: 15px;
+}
+
+button.delete-task {
+    display: inline;
+    position: relative;
+    font-size: 1rem;
+    padding: 5px;
 }
 
 button.add-task {
@@ -184,6 +190,7 @@ div.new-task input {
     padding: 10px;
     margin: 5px 0px;
     border: 1px gainsboro solid;
+    font-family: sans-serif;
 }
 
 input:focus {

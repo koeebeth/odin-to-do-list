@@ -175,11 +175,29 @@ const DOMManipulator = (function(){
     }
 
     const setPage = function(){
+        //New Task Popup
         const formDiv = document.querySelector('div.new-task');
-        const btn = document.querySelector('button.add-task');
-        btn.addEventListener('click', () => {
+        const formBtn = document.querySelector('button.add-task');
+        formBtn.addEventListener('click', () => {
             formDiv.classList.toggle('inactive');
             contentDiv.classList.toggle('blur');
+        })
+
+        //Accept form 
+        const formSubmitBtn = formDiv.querySelector('button#add-task');
+
+        formSubmitBtn.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const taskObj = taskMod.newTask(
+                document.getElementById("title").value,
+                document.getElementById("date").value,
+                document.getElementById("priority").value,
+                document.getElementById("details").value,
+                document.getElementById("project").value,
+                false
+            )
+            storage.taskList.addTask(taskObj);
+            location.reload();
         })
     }
 
@@ -197,7 +215,7 @@ const DOMManipulator = (function(){
 })()
 
 window.onload = () => {
-    DOMManipulator.displayAllTasks();
+    //DOMManipulator.displayAllTasks();
     DOMManipulator.setPage();
 };
 
