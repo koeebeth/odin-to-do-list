@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../src/style.css">
 </head>
 <body>
-    <div id="content" class="blur">
+    <div id="content">
         <nav class="navbar">
             <header>
                 <h1>TO DO</h1>
@@ -31,7 +31,6 @@
                     <br>
                     <h4>Project:<span></span></h4>
                     <h4>Priority:<span></span></h4>
-                    <br>
                     <p class="details">Details</p>
                     <h3 class="duedate">Due to: <span>12.12.2023</span></h3>
                     <input type="checkbox" class="check">
@@ -39,17 +38,17 @@
             </div>
         </div>
     </div>
-    <div class="new-task">
-        <form>
+    <div class="new-task inactive">
+        <form id="new-task">
             <h3>New Task</h3>
             <div>
-                <input type="text" name="title" placeholder="Title">
-                <input type="text" name="details" placeholder="Details">
-                <input type="text" name="project" placeholder="Project">
-                <input type="date" name="date" placeholder="Due Date">
-                <input type="number" min="1" max="5" placeholder="Priority">
+                <input type="text" name="title" id="title" placeholder="Title" required>
+                <input type="text" name="details" id="details" placeholder="Details">
+                <input type="text" name="project" id="project" placeholder="Project">
+                <input type="date" name="date" id="date" placeholder="Due Date">
+                <input type="number" min="1" max="5" id="priority" placeholder="Priority(1-5)">
             </div>
-            <button type="submit">Add Task</button>
+            <button type="submit" id="add-task">Add Task</button>
         </form>
     </div>
     <button type="button" class="add-task">+</button>
