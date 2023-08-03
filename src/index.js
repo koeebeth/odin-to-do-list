@@ -105,17 +105,17 @@ const DOMHelpers = (function(){
         taskDiv.dataset.taskId = task.id;
 
         const taskHeader = document.createElement('h3');
+        taskHeader.classList.add('task-title');
         taskHeader.textContent = task.title;
 
         const project = document.createElement('h4');
+        project.classList.add('task-project')
         if(task.project){
             project.textContent = `Project: ${task.project}`
         }
         else{
             project.textContent = "No project"
         }
-
-        const br = document.createElement('br');
 
         const details = document.createElement('p');
         details.classList.add('details')
@@ -153,12 +153,22 @@ const DOMHelpers = (function(){
             taskDiv.dataset.priority = task.priority;
         }
 
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = "x"
+        deleteBtn.classList.add('delete');
+        deleteBtn.setAttribute("type", "button");
+        deleteBtn.addEventListener('click', (e) => {
+            const id = e.currentTarget.parentElement.dataset.taskId;
+            storage.taskList.deleteTask(id);
+            location.reload();
+        })
+
         taskDiv.appendChild(taskHeader);
         taskDiv.appendChild(project);
-        taskDiv.appendChild(br);
         taskDiv.appendChild(details);
         taskDiv.appendChild(dueDate);
         taskDiv.appendChild(check);
+        taskDiv.appendChild(deleteBtn);
 
         return taskDiv;
     }
@@ -186,7 +196,7 @@ const DOMManipulator = (function(){
         //Accept form 
         const formSubmitBtn = formDiv.querySelector('button#add-task');
 
-        formSubmitBtn.addEventListener('submit', (e) => {
+        formSubmitBtn.addEventListener('click', (e) => {
             e.preventDefault();
             const taskObj = taskMod.newTask(
                 document.getElementById("title").value,
@@ -215,7 +225,7 @@ const DOMManipulator = (function(){
 })()
 
 window.onload = () => {
-    //DOMManipulator.displayAllTasks();
+    DOMManipulator.displayAllTasks();
     DOMManipulator.setPage();
 };
 

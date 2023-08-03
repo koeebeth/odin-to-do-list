@@ -64,7 +64,8 @@ div.task {
     padding: 15px;
     position: relative;
     box-sizing: border-box;
-    flex-direction: column;
+    display: grid;
+    grid-template: 3rem 1fr 2fr 2rem / 1fr 4rem;
     background-color: rgb(216, 216, 216);
     border-radius: 15px;
     border-left: 10px solid grey;
@@ -86,23 +87,22 @@ div[data-priority="5"] {
     border-color: cornflowerblue;
 }
 
-h3 {
+.task-title {
+    grid-area: 1 / 1 / 2 / 2;
     font-size: 1.6rem;
     font-weight: 600;
     max-width: 90%;
 }
 
-h4 {
+.task-project{
+    grid-area: 2 / 1 / 3 / 2;
     font-weight: 500;
     padding: 5px 0px;
 }
 
-.task.done {
-    color: darkgrey;
-}
 
 .details {
-    height: 3rem;
+    grid-area: 3 / 1 / 4 / 2;
     overflow: scroll;
 }
 
@@ -110,7 +110,8 @@ h4 {
     font-size: 1rem;
     font-weight: 500;
     color: slategrey;
-    display: inline;
+    grid-area: 4 / 1 / 5 / 2;
+    align-self: end;
 }
 
 input[type="checkbox"]{
@@ -118,16 +119,23 @@ input[type="checkbox"]{
     accent-color: grey;
     height: 1.3rem;
     width: 1.3rem;
-    position: absolute;
-    top: 15px;
-    right: 15px;
+    grid-area: 4 / 2 / 5 / 3;
+    justify-self: right;
+    align-self: end;
 }
 
-button.delete-task {
-    display: inline;
-    position: relative;
+button.delete {
     font-size: 1rem;
-    padding: 5px;
+    padding: 4px;
+    background-color: transparent;
+    grid-area: 1 / 2 / 2 / 3;
+    justify-self: right;
+    align-self: start;
+    border: none;
+}
+
+.task.done {
+    color: darkgrey;
 }
 
 button.add-task {
