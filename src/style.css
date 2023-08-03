@@ -1,0 +1,129 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    height: 100vh;
+    font-family: 'Rubik', sans-serif;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a:active, a:visited, a:link{
+    text-decoration: none;
+    color: inherit;
+}
+
+.inactive {
+    display: none;
+}
+
+h1 {
+    font-size: 4rem;
+    letter-spacing: 0.3rem;
+    padding-bottom: 2rem;
+}
+
+div#content {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 1fr 3fr ;
+}
+
+div .navbar {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding-left: 30px;
+    align-items: flex-start;
+    font-size: 1.5rem;
+    padding: 2rem;
+}
+
+div.content {
+    overflow: scroll;
+}
+
+div#tasks {
+    display: grid;
+    padding: 2rem;
+    grid-template-columns: repeat(auto-fit, 400px);
+    grid-auto-rows: 210px;
+    justify-content: start;
+    grid-gap: 15px;
+    overflow: scroll;
+}
+
+div.task {
+    padding: 15px;
+    position: relative;
+    box-sizing: border-box;
+    flex-direction: column;
+    background-color: rgb(216, 216, 216);
+    border-radius: 15px;
+}
+
+h3 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    max-width: 90%;
+}
+
+h4 {
+    font-weight: 500;
+    padding: 5px 0px;
+}
+
+.task.done {
+    color: darkgrey;
+}
+
+.details {
+    height: 3rem;
+    overflow: scroll;
+}
+
+.duedate{
+    font-size: 1rem;
+    font-weight: 500;
+    position: relative;
+    left: 63%;
+    top: 15%;
+}
+
+input[type="checkbox"]{
+    border-radius: 100%;
+    accent-color: grey;
+    height: 1.3rem;
+    width: 1.3rem;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+button.add-task {
+    position: fixed;
+    border-radius: 100%;
+    background-color: gainsboro;
+    height: 3rem;
+    font-size: 1.5rem;
+    aspect-ratio: 1;
+    border: none;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, .5);
+    bottom: 7vh;
+    right: 7vh;
+    transition: ease-out 0.4s;
+}
+
+button.add-task:hover {
+    rotate: -90deg;
+    transform: scale(120%);
+    transition: ease-out 0.2s;
+}
+

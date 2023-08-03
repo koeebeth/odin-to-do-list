@@ -1,3 +1,4 @@
+
 //Storage availability check from MDN docs
 function storageAvailable(type) {
     let storage;
@@ -22,42 +23,45 @@ function storageAvailable(type) {
 
 const taskMod = (function(){ 
     
-        const newTask = (title, dueDate = null, priority = 1, details = null, isDone = false, project = null) => {
-        
-        const proto = {
-            check: function() {
-                this.isDone = this.isDone === false ? true : false;
-                return this.isDone
-            },
-            change: function(prop, value) {
-                this[prop] = value;
-                return this[prop];
-            }
+    const proto = {
+        check: function() {
+            this.isDone = this.isDone === false ? true : false;
+            return this.isDone
+        },
+        change: function(prop, value) {
+            this[prop] = value;
+            return this[prop];
         }
+    }
+        const newTask = (title, dueDate = null, priority = 1, details = null, project = null, isDone = false) => {
+        
         let props = {
             title, 
             dueDate, 
             priority, 
             details, 
-            isDone, 
-            project
+            project,
+            isDone
         }
-        const obj = Object.create(proto);
+        const obj = Object.create(proto)
         return Object.assign(obj, props);
     }
-    return {newTask};
+    return {newTask, proto};
 })();
 
 
 const storage = (function(){
+    let tasks = JSON.parse(localStorage.getItem('taskList'));
+    if(!tasks) {
+        tasks = [];
+    }
+
     const taskList = {
-        tasks: (function(){
-            const list = localStorage.getItem('tasklist')
-            if(list){
-                return JSON.parse(list)
-            }
-            return []
-        })(),
+        tasks: tasks,
+
+        getAllTasks: function(){
+            return this.tasks;
+        },
 
         deleteTask: function(i) {
             delete this.tasks[i];
@@ -65,7 +69,18 @@ const storage = (function(){
         },
 
         addTask: function(task) {
+            task["id"] = this.tasks.length;
             this.tasks.push(task);
+            this.updateStorage();
+        },
+
+        editTask: function(i, prop, value) {
+            this.tasks[i][prop] = value;
+            this.updateStorage();
+        },
+
+        checkTask: function(i) {
+            this.tasks[i].isDone = this.tasks[i].isDone === false ? true : false;
             this.updateStorage();
         },
 
@@ -79,6 +94,98 @@ const storage = (function(){
             }
         }
     }
-
     return {taskList}
 })()
+
+
+const DOMHelpers = (function(){
+    function renderTask(task){
+        const taskDiv = document.createElement('div');
+        taskDiv.classList.add('task');
+        taskDiv.dataset.taskId = task.id;
+
+        const taskHeader = document.createElement('h3');
+        taskHeader.textContent = task.title;
+
+        const project = document.createElement('h4');
+        if(task.project){
+            project.textContent = `Project: ${task.project}`
+        }
+        else{
+            project.textContent = "No project"
+        }
+
+        const br = document.createElement('br');
+
+        const details = document.createElement('p');
+        details.classList.add('details')
+        if(task.details){
+            details.textContent = task.details;
+        }
+        else{
+            details.textContent = "No details"
+        }
+
+        const dueDate = document.createElement('h3');
+        dueDate.classList.add('duedate');
+        if(task.dueDate){
+            dueDate.textContent = `Due to: ${task.dueDate}`
+        }
+        else{
+            dueDate.textContent = "No date"
+        }
+
+        const check = document.createElement('input');
+        check.classList.add('check');
+        check.setAttribute('type', 'checkbox')
+        if (this.isDone) {
+            check.checked = true;
+        }
+        check.dataset.taskId = task.id;
+        check.addEventListener('input', (e) => {
+            const parentDiv = e.currentTarget.parentElement;
+            const id = e.currentTarget.dataset.taskId;
+            storage.taskList.checkTask(id);
+            parentDiv.classList.toggle('done');
+        })
+
+        if(task.priority){
+            taskDiv.classList.add(`${task.priority}`)
+        }
+
+        taskDiv.appendChild(taskHeader);
+        taskDiv.appendChild(project);
+        taskDiv.appendChild(br);
+        taskDiv.appendChild(details);
+        taskDiv.appendChild(dueDate);
+        taskDiv.appendChild(check);
+
+        return taskDiv;
+    }
+    return {renderTask};
+})()
+
+
+const DOMManipulator = (function(){
+    const tasksDiv =  document.querySelector("#tasks");
+
+    const clearTaskDiv = function(){
+        tasksDiv.innerHTML = ''
+    }
+
+    const displayAllTasks = function(){
+        clearTaskDiv();
+        const tasks = storage.taskList.getAllTasks();
+        for (const task of tasks){
+            if(task){
+                const newTask = DOMHelpers.renderTask(task)
+                tasksDiv.appendChild(newTask);
+            }
+        }
+    }
+    return {displayAllTasks}
+})()
+
+window.onload = DOMManipulator.displayAllTasks();
+
+task1 = taskMod.newTask('laundry', 'tomorrow', null, "no details", "no projects", false)

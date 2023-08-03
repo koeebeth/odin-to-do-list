@@ -5,8 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../src/index.js" defer></script>
     <title>ToDo</title>
+    <link rel="stylesheet" href="../src/style.css">
 </head>
 <body>
-    
+    <div id="content">
+        <nav class="navbar">
+            <header>
+                <h1>TO DO</h1>
+            </header>
+            <a href="#">All Tasks</a>
+            <a href="#projects">
+                <details>
+                    <summary>Projects</summary>
+                    <ul>
+                        <li>Project</li>
+                        <li>Project</li>
+                    </ul>
+                </details>
+            </a>
+        </nav>
+        <div class="content">
+            <div id="tasks">
+                <div class="task">
+                    <h3>Task 1</h3>
+                    <br>
+                    <h4>Project:<span></span></h4>
+                    <h4>Priority:<span></span></h4>
+                    <br>
+                    <p class="details">Details</p>
+                    <h3 class="duedate">Due to: <span>12.12.2023</span></h3>
+                    <input type="checkbox" class="check">
+                </div>
+            <button type="button" class="add-task">+</button>
+        </div>
+    </div>
+    <footer>
+    </footer>
 </body>
 </html>
