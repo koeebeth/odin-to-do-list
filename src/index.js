@@ -1,7 +1,7 @@
 import * as storage from './modules/storage.js';
 import * as taskMod from './modules/taskmodule.js';
 import * as DOMHelpers from './modules/helpers.js';
-import './style.css'
+import './style.css';
 
 
 const DOMManipulator = (function(){
@@ -34,21 +34,53 @@ const DOMManipulator = (function(){
 
         //Display projects 
         const projectsList = document.querySelector('ul.projects');
+        const projectOptions = document.querySelector('select#project');
         const projectNames = storage.projectList.getProjectNames();
+
         for(const name of projectNames){
             const li = document.createElement('li');
+            li.dataset.projectName = name;
+
             const link = document.createElement('a');
-            link.dataset.projectName = name;
+
+            //Delete task button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.classList.add('delete');
+            deleteBtn.addEventListener('click', (e) => {
+                const name = e.currentTarget.parentElement.dataset.projectName;
+                storage.projectList.deleteProject(name);
+                e.currentTarget.parentElement.remove();
+            })
+            deleteBtn.textContent = "X";
+
             link.textContent = name;
             link.addEventListener('click', (e) => {
-                const projectName = e.currentTarget.dataset.projectName;
+                const projectName = e.currentTarget.parentElement.dataset.projectName;
                 const tasks = DOMHelpers.sortByProject(projectName);
                 
                 DOMHelpers.displayTasks(tasks);
             })
+
+            //Display selection options for projects
+            const option = document.createElement('option');
+            option.textContent = name;
+            option.value = name;
+
             li.appendChild(link);
+            li.appendChild(deleteBtn);
             projectsList.appendChild(li);
+            projectOptions.appendChild(option);
         }
+
+        //Add project form
+        const addProjectForm = document.getElementById('add-project-form');
+        addProjectForm.addEventListener('keyup', (e) => {
+            const name = e.currentTarget.value;
+            if(e.key === "Enter" && name !== ''){
+                console.log(e.currentTarget.value, name)
+                storage.projectList.addProject(name);
+            }
+        })
 
         //Display all tasks
         const allTasks = document.querySelector('a.all-tasks');
@@ -65,5 +97,3 @@ window.onload = () => {
     DOMManipulator.displayAllTasks();
     DOMManipulator.setPage();
 };
-
-let task1 = taskMod.newTask('laundry', 'tomorrow', null, "no details", "no projects", false)

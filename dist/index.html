@@ -13,13 +13,16 @@
                 <h1>TO DO</h1>
             </header>
             <a href="#" class="all-tasks">All Tasks</a>
-            <a href="#">
+            <h2 class="projects">
                 <details>
                     <summary>Projects</summary>
                     <ul class="projects">
                     </ul>
+                    <form>
+                        <input id="add-project-form" type="text" name="add-project" placeholder="Add Project" autocomplete="off">
+                    </form>
                 </details>
-            </a>
+            </h2>
         </nav>
         <div class="content">
             <div id="tasks">
@@ -40,7 +43,8 @@
             <div>
                 <input type="text" name="title" id="title" placeholder="Title" required>
                 <input type="text" name="details" id="details" placeholder="Details">
-                <input type="text" name="project" id="project" placeholder="Project">
+                <select name="project" id="project" required>
+                </select>
                 <input type="date" name="date" id="date" placeholder="Due Date">
                 <input type="number" min="1" max="5" id="priority" placeholder="Priority(1-5)">
             </div>

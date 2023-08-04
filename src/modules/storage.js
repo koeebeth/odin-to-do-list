@@ -88,7 +88,17 @@ const projectList = {
     },
 
     addProject: function(name){
+        const projects = this.projects;
         projects.push(name);
+        this.updateStorage()
+    },
+
+    deleteProject: function(name) {
+        const projects = this.projects;
+        const index = projects.indexOf(name);
+        if (index !== (-1)){
+            projects.splice(index, 1);
+        }
         this.updateStorage()
     },
 
