@@ -1,3 +1,4 @@
+import * as taskMod from './taskmodule.js'
 
 //Storage availability check (source: MDN docs)
 function storageAvailable(type) {
@@ -25,7 +26,8 @@ function storageAvailable(type) {
 
 let tasks = JSON.parse(localStorage.getItem('taskList'));
 if(!tasks) {
-    tasks = [];
+    tasks = [
+    ];
 }
 
 let projects = JSON.parse(localStorage.getItem('projectList'));

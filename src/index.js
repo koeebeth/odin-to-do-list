@@ -2,6 +2,7 @@ import * as storage from './modules/storage.js';
 import * as taskMod from './modules/taskmodule.js';
 import * as DOMHelpers from './modules/helpers.js';
 import './style.css';
+import { add } from 'date-fns';
 
 
 const DOMManipulator = (function(){
@@ -22,7 +23,7 @@ const DOMManipulator = (function(){
         form.addEventListener('submit', (e) => {
             const taskObj = taskMod.newTask(
                 document.getElementById("title").value,
-                document.getElementById("date").value,
+                Date.parse(document.getElementById("date").value),
                 document.getElementById("priority").value,
                 document.getElementById("details").value,
                 document.getElementById("project").value,
@@ -74,13 +75,14 @@ const DOMManipulator = (function(){
 
         //Add project form
         const addProjectForm = document.getElementById('add-project-form');
-        addProjectForm.addEventListener('keyup', (e) => {
-            const name = e.currentTarget.value;
-            if(e.key === "Enter" && name !== ''){
-                console.log(e.currentTarget.value, name)
-                storage.projectList.addProject(name);
+        addProjectForm.addEventListener('keydown', (e) => {
+            const name = document.getElementById('add-project-input').value;            if (e.key === 'Enter'){
+                if (name != '' && e.key == 'Enter'){
+                    storage.projectList.addProject(name);
+                }
             }
-        })
+        }
+        )
 
         //Display all tasks
         const allTasks = document.querySelector('a.all-tasks');

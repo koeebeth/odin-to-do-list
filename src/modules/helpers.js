@@ -1,4 +1,5 @@
 import * as storage from './storage.js';
+import {format} from 'date-fns'
 
 const tasksDiv =  document.querySelector("#tasks");
 
@@ -36,7 +37,8 @@ function renderTask(task){
     const dueDate = document.createElement('h3');
     dueDate.classList.add('duedate');
     if(task.dueDate){
-        dueDate.textContent = `Due to: ${task.dueDate}`
+        const date = format(task.dueDate, "PPPP")
+        dueDate.textContent = `Due to: ${date}`
     }
     else{
         dueDate.textContent = "No date"
@@ -86,11 +88,11 @@ function sortByProject(projectName) {
 
     let projectTasks = [];
     for(const task of allTasks){
-        if(task.project == projectName){
-            projectTasks.push(task);
-        }
-        if(task.project == "" && projectName == "Unsorted"){
-            projectTasks.push(task);
+    if(task.project == projectName){
+        projectTasks.push(task);
+    }
+    if(task.project == "" && projectName == "Unsorted"){
+        projectTasks.push(task);
         }
     }
     return projectTasks;
