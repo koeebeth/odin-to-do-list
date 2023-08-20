@@ -5,19 +5,19 @@
 Preview
 Live preview **[here](https://koeebeth.github.io/odin-to-do-list/)**
 
-###Features
+### Features
 - Adding and deleting custom projects
 - Sorting tasks by projects
 - Varying colors for different priorities
 - Saving tasks in local storage
 - Optional deadline dates
 
-###Tools
+### Tools
 - Vanilla JS
 - CSS
 - HTML
 
-###Learned
+### Learned
 - Getting and storing information in local storage
 - Manipulating DOM to dynamically display elements
 - Formatting dates
