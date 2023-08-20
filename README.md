@@ -1,8 +1,10 @@
 # TO-DO App
 
-To-Do App created for the asignment of [The Odin Project](https://www.theodinproject.com/)
+**To-Do App created for the asignment of [The Odin Project](https://www.theodinproject.com/)**
+
 <img width="1512" alt="Screenshot 2023-08-20 at 12 35 42" src="https://github.com/koeebeth/odin-to-do-list/assets/96339397/e0b8e8a0-9f7a-4884-9a67-d72bcb6a1034">
-Preview
+
+
 🔗 **Live preview** [here](https://koeebeth.github.io/odin-to-do-list/)
 
 ### Features
